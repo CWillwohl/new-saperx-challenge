@@ -228,7 +228,7 @@ Error: 404, not found
 
 ##### Endpoint: /api/agenda/{idPhoneBook}/store
 
-1. Data:
+1. Body:
 
 ```json
 {
@@ -263,7 +263,7 @@ Error: 404, not found
 
 ##### Endpoint: /api/agenda/{idPhoneBook}/update/{id}
 
-1. Data:
+1. Body:
 
 ```json
 {
