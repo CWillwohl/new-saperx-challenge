@@ -31,6 +31,7 @@ class ContactController extends Controller
     public function store(ApiStoreContactRequest $request, $idPhoneBook)
     {
         $data = $request->validated();
+
         $data['phone_book_id'] = $idPhoneBook;
 
         $contact = $this->contactService->create($data);
@@ -44,7 +45,7 @@ class ContactController extends Controller
 
         $data['phone_book_id'] = $idPhoneBook;
 
-        $contact = Contact::findOrFail($idContact);
+        $contact = Contact::find($idContact);
 
         if(!$contact) {
             return response()->json('Error, contact not found', 404);
@@ -57,7 +58,7 @@ class ContactController extends Controller
 
     public function destroy($idPhoneBook, $idContact)
     {
-        $contact = Contact::where('phone_book_id', $idPhoneBook)->findOrFail($idContact);
+        $contact = Contact::where('phone_book_id', $idPhoneBook)->find($idContact);
 
         if(!$contact) {
             return response()->json('Error, contact not found', 404);

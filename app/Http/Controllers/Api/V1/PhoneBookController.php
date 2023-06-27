@@ -40,7 +40,7 @@ class PhoneBookController extends Controller
     {
         $data = $request->validated();
 
-        $phoneBook = PhoneBook::findOrFail($idPhoneBook);
+        $phoneBook = PhoneBook::find($idPhoneBook);
 
         if(!$phoneBook) {
             return response()->json('Error, phone book not found', 404);
@@ -52,9 +52,10 @@ class PhoneBookController extends Controller
 
     public function destroy($idPhoneBook)
     {
-        $phoneBook = PhoneBook::findOrFail($idPhoneBook);
+        $phoneBook = PhoneBook::find($idPhoneBook);
 
         if($phoneBook) {
+
             $this->phoneBookService->destroy($phoneBook);
 
             return response()->json('Phone book deleted', 204);

@@ -141,9 +141,6 @@ class ContactTest extends TestCase
             'success' => false,
             'message' => 'Erro de validação',
             'data'  => [
-                'phone_book_id' => [
-                    'O campo phone book id é obrigatório.',
-                ],
                 'birthday' => [
                     'O campo data de nascimento é obrigatório.',
                 ],
@@ -171,7 +168,7 @@ class ContactTest extends TestCase
             'phone_book_id' => 'invalid',
             'birthday'      => '123',
             'email'         => 'invalid',
-            'phone'         => '9999999999',
+            'phone'         => '123456789',
             'name'          => str_repeat('x', 256),
             'cpf'           => '12121212121212',
         ];
@@ -184,9 +181,6 @@ class ContactTest extends TestCase
             'success' => false,
             'message' => 'Erro de validação',
             'data'  => [
-                'phone_book_id' => [
-                    'O campo phone book id selecionado é inválido.',
-                ],
                 'birthday' => [
                     'O campo data de nascimento não é uma data válida.',
                 ],
@@ -201,6 +195,46 @@ class ContactTest extends TestCase
                 ],
                 'cpf' => [
                     'O campo CPF não pode ser superior a 11 caracteres.',
+                ],
+            ],
+        ]);
+    }
+
+    public function testValidationWithAnotherErrors2()
+    {
+        $phoneBook = PhoneBook::factory()->create();
+
+        $data = [
+            'phone_book_id' => 'invalid',
+            'birthday'      => '123',
+            'email'         => str_repeat('x', 256),
+            'phone'         => '123456789012',
+            'name'          => str_repeat('x', 256),
+            'cpf'           => '1',
+        ];
+
+        $response = $this->post(route('api.contact.store', $phoneBook->id), $data);
+
+
+        $response->assertStatus(422)
+        ->assertJson([
+            'success' => false,
+            'message' => 'Erro de validação',
+            'data'  => [
+                'birthday' => [
+                    'O campo data de nascimento não é uma data válida.',
+                ],
+                'email' => [
+                    'O campo e-mail deve ser um endereço de e-mail válido.',
+                ],
+                'phone' => [
+                    'O campo telefone não pode ser superior a 11 caracteres.',
+                ],
+                'name' => [
+                    'O campo nome não pode ser superior a 255 caracteres.',
+                ],
+                'cpf' => [
+                    'O campo CPF deve ter pelo menos 11 caracteres.',
                 ],
             ],
         ]);

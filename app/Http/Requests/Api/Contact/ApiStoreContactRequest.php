@@ -40,7 +40,6 @@ class ApiStoreContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone_book_id' => ['required', 'exists:phone_books,id', 'numeric'],
             'birthday'      => ['required', 'date'],
             'email'         => ['required', 'email', 'max:255'],
             'phone'         => ['required', 'string', 'min:11', 'max:11'],
