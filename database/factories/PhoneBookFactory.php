@@ -1,0 +1,25 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PhoneBook>
+ */
+class PhoneBookFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'DDD'  => $this->faker->randomDigit,
+            'name' => $this->faker->name,
+            'city' => $this->faker->city
+        ];
+    }
+}
